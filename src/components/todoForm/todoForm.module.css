@@ -1,0 +1,22 @@
+.todo_form {
+    position: fixed;
+    z-index: 1;
+    height: 40px;
+    width: inherit;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, .5);
+    backdrop-filter: blur(40px);
+}
+
+.form_add_todo {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    grid-gap: 15px;
+}
+
+.btn_add_todo {
+    cursor: pointer;
+}

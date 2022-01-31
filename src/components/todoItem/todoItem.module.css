@@ -1,0 +1,55 @@
+.todo_item {
+    height: 60px;
+    width: 600px;
+    background: #181b1d;
+    color: #fff;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 20px 20px;
+    grid-gap: 10px;
+    align-items: center;
+    animation: add_todo 1s ease;
+}
+
+.todo_item_checked {
+    background: #36610a;
+}
+
+.check_todo_item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.rm_todo {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: crimson;
+    color: #fff;
+    cursor: pointer;
+}
+
+#create_todo {
+    transform: rotateX(0deg);
+}
+
+#destroy_todo {
+    transform: rotateX(90deg);
+}
+
+@keyframes add_todo {
+    0% {
+        transform: rotateX(90deg);
+        transform: scale(.5);
+    }
+
+    100% {
+        transform: rotateX(0deg);
+        transform: scale(1);
+    }
+}
