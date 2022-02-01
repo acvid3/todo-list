@@ -7,7 +7,7 @@ const TodoForm = ({addTodo}) => {
     <div className={todo_form}>
       <form className={form_add_todo} onSubmit={e => {addTodo(e)}}>
           <input type="text" name='todo_name'/>
-          <button className={btn_add_todo}>add</button>
+          <button className={btn_add_todo}>Add todo</button>
       </form>
     </div>
   )

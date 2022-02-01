@@ -4,11 +4,28 @@ import Context from './hooks/context';
 import getTodos from './api/getTodos';
 import TodoForm from "./components/todoForm/TodoForm";
 
+const storage = todos => {
+  if (todos) {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }
+
+  if (JSON.parse(localStorage.getItem('todos'))) {
+    return JSON.parse(localStorage.getItem('todos'))
+  }
+
+  return {
+    length: 0
+  };
+}
+
 const App = () => {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    getTodos().then(data => setTodos(data));
+    storage().length
+    ? setTodos(storage())
+    : getTodos().then(data => setTodos(storage(data)));
+    
   }, []);
 
   const onChange = todoId => {
@@ -17,27 +34,27 @@ const App = () => {
         todo.completed = !todo.completed;
       }
     });
-    setTodos([...todos]);
+    setTodos([...storage(todos)]);
   }
 
   const addTodo = e => {
     e.preventDefault();
     
     if (e.target.elements.todo_name.value) {
-      todos.push({
+      todos.unshift({
         id: Date.now(),
         title: e.target.elements.todo_name.value,
         userId: 1,
         completed: false
       });
   
-      setTodos([...todos]);
+      setTodos([...storage(todos)]);
       e.target.elements.todo_name.value = '';
     }
   }
 
   const removeTodo = todoId => {
-    setTodos([...todos.filter(todo => todo.id !== todoId)]);
+    setTodos([...storage(todos.filter(todo => todo.id !== todoId))]);
   }
 
   return (
@@ -47,7 +64,7 @@ const App = () => {
           {
             todos.length 
             ? <TodoList todos={todos} />
-            : <h3>No todos!</h3>
+            : <h3 style={{color: '#fff'}}> No todos!</h3>
           }
           
       </div>
