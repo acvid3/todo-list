@@ -11,9 +11,9 @@ import Context from '../../hooks/context';
 
 
 const TodoItem = ({todo, index}) => {
-    const {onChange, removeTodo} = useContext(Context);
+    const {onChange, removeTodo, sortTodo} = useContext(Context);
     const [animations, setAnimations] = useState(create_todo);
-
+    const [currentTodo, setCurrentTodo] = useState({});
     const classes = [todo_item, animations];
     
 
@@ -21,8 +21,37 @@ const TodoItem = ({todo, index}) => {
         classes.push(todo_item_checked);
     }
 
+    const dragStartHandler = (e, todo) => {
+        setCurrentTodo(todo);
+        
+    }
+
+    const dragEndHandler = (e, todo) => {
+        console.log('currentTodo', currentTodo);
+    }
+
+    const dragOverHandler = (e, todo) => {
+        e.stopPropagation();
+        e.preventDefault();
+      
+    }
+
+    const dropHandler = (e, todo) => {
+        e.preventDefault();
+
+        sortTodo(currentTodo, todo);
+    }
+
     return (
-        <div className={classes.join(' ')}>
+        <div 
+            className={classes.join(' ')}
+            onDragStart={e => dragStartHandler(e, todo)}
+            onDragLeave={e => dragEndHandler(e, todo)}
+            onDragEnd={e => dragEndHandler(e, todo)}
+            onDragOver={e => dragOverHandler(e, todo)}
+            onDrop={e => dropHandler(e, todo)}
+            draggable={true}
+        >
             <div>{index + 1}</div>
 
             <span>{todo.title}</span>

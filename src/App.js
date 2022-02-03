@@ -57,8 +57,30 @@ const App = () => {
     setTodos([...storage(todos.filter(todo => todo.id !== todoId))]);
   }
 
+  const sortTodo = (aTodo, bTodo) => {
+    let firstIndex = 0;
+    let lastIndex = 0;
+
+    [...todos].map((todo, index) => {
+      if (aTodo === todo) {
+        firstIndex = index;
+      }
+
+      if (bTodo === todo) {
+        lastIndex = index;
+      }
+    });
+    console.log(aTodo);
+    console.log(bTodo);
+    // console.log(firstIndex);
+    // console.log(lastIndex);
+    // todos[firstIndex] = bTodo;
+    // todos[lastIndex] = aTodo;
+    // setTodos([...todos]);
+  }
+
   return (
-    <Context.Provider value={{onChange, removeTodo}} >
+    <Context.Provider value={{onChange, removeTodo, sortTodo}} >
       <div className="App">
           <TodoForm addTodo={addTodo} />
           {
