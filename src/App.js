@@ -20,6 +20,15 @@ const storage = todos => {
 
 const App = () => {
   const [todos, setTodos] = useState([]);
+  const [movedTodo, setMovedTodo] = useState({});
+
+  const movedTodoHandler = todo => {
+    if (todo) {
+      setMovedTodo(todo);
+    }
+
+    return movedTodo;
+  }
 
   useEffect(() => {
     storage().length
@@ -74,13 +83,13 @@ const App = () => {
     console.log(bTodo);
     // console.log(firstIndex);
     // console.log(lastIndex);
-    // todos[firstIndex] = bTodo;
-    // todos[lastIndex] = aTodo;
-    // setTodos([...todos]);
+    todos[firstIndex] = bTodo;
+    todos[lastIndex] = aTodo;
+    setTodos([...todos]);
   }
 
   return (
-    <Context.Provider value={{onChange, removeTodo, sortTodo}} >
+    <Context.Provider value={{onChange, removeTodo, sortTodo, movedTodoHandler}} >
       <div className="App">
           <TodoForm addTodo={addTodo} />
           {

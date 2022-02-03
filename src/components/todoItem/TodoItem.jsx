@@ -11,7 +11,7 @@ import Context from '../../hooks/context';
 
 
 const TodoItem = ({todo, index}) => {
-    const {onChange, removeTodo, sortTodo} = useContext(Context);
+    const {onChange, removeTodo, sortTodo, movedTodoHandler} = useContext(Context);
     const [animations, setAnimations] = useState(create_todo);
     const [currentTodo, setCurrentTodo] = useState({});
     const classes = [todo_item, animations];
@@ -22,12 +22,11 @@ const TodoItem = ({todo, index}) => {
     }
 
     const dragStartHandler = (e, todo) => {
-        setCurrentTodo(todo);
-        
+        movedTodoHandler(todo);
     }
 
     const dragEndHandler = (e, todo) => {
-        console.log('currentTodo', currentTodo);
+    
     }
 
     const dragOverHandler = (e, todo) => {
@@ -39,7 +38,7 @@ const TodoItem = ({todo, index}) => {
     const dropHandler = (e, todo) => {
         e.preventDefault();
 
-        sortTodo(currentTodo, todo);
+        sortTodo(movedTodoHandler(), todo);
     }
 
     return (
